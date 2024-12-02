@@ -10,9 +10,11 @@ if (MSVC)
     target_include_directories(badgesdr_source PRIVATE ${LIBUSB_INCLUDE_DIRS})
     target_link_libraries(badgesdr_source PRIVATE ${LIBUSB_LIBRARIES})
 elseif (ANDROID)
+    find_package(libusb)
+    find_package(rtlsdr)
     target_link_libraries(badgesdr_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/lib/libusb1.0.so
-        /sdr-kit/${ANDROID_ABI}/lib/librtlsdr.so
+        libusb
+        rtlsdr::rtlsdr_static
     )
 else (MSVC)
     find_package(PkgConfig)

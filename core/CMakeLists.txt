@@ -102,15 +102,19 @@ if (MSVC)
     find_package(zstd CONFIG REQUIRED)
     target_link_libraries(sdrpp_core PUBLIC zstd::libzstd_shared)
 elseif (ANDROID)
+    find_package(zstd CONFIG REQUIRED)
+    find_package(CpuFeaturesNdkCompat CONFIG REQUIRED)
+    find_package(Volk CONFIG REQUIRED)
+    find_package(FFTW3f CONFIG REQUIRED)
     target_include_directories(sdrpp_core PUBLIC
-        /sdr-kit/${ANDROID_ABI}/include
         ${ANDROID_NDK}/sources/android/native_app_glue
     )
 
     target_link_libraries(sdrpp_core PUBLIC
-        /sdr-kit/${ANDROID_ABI}/lib/libvolk.so
-        /sdr-kit/${ANDROID_ABI}/lib/libfftw3f.so
-        /sdr-kit/${ANDROID_ABI}/lib/libzstd.so
+        Volk::volk_static
+	CpuFeatures::ndk_compat
+	zstd::libzstd_static
+	FFTW3::fftw3f
         android
         EGL
         GLESv3

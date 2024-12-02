@@ -13,13 +13,11 @@ if (MSVC)
 
     target_link_libraries(airspy_source PRIVATE airspy)
 elseif (ANDROID)
-    target_include_directories(airspy_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/include/libairspy
-    )
-
+    find_package(libusb)
+    find_package(airspy)
     target_link_libraries(airspy_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/lib/libusb1.0.so
-        /sdr-kit/${ANDROID_ABI}/lib/libairspy.so
+        libusb
+        airspy-static
     )
 else (MSVC)
     find_package(PkgConfig)

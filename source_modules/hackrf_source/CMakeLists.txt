@@ -11,13 +11,11 @@ if (MSVC)
 
     target_link_libraries(hackrf_source PRIVATE hackrf)
 elseif (ANDROID)
-    target_include_directories(hackrf_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/include/libhackrf
-    )
-
+    find_package(libusb)
+    find_package(hackrf)
     target_link_libraries(hackrf_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/lib/libusb1.0.so
-        /sdr-kit/${ANDROID_ABI}/lib/libhackrf.so
+        libusb
+        hackrf-static
     )
 else (MSVC)
     find_package(PkgConfig)

@@ -82,9 +82,9 @@ if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
     if (MSVC)
         set(SDRPP_COMPILER_FLAGS /std:c++17 /EHsc)
     elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        set(SDRPP_COMPILER_FLAGS -g -Og -std=c++17 -Wno-unused-command-line-argument -undefined dynamic_lookup)
+        set(SDRPP_COMPILER_FLAGS -g -Og -Wno-unused-command-line-argument -undefined dynamic_lookup)
     else ()
-        set(SDRPP_COMPILER_FLAGS -g -Og -std=c++17)
+        set(SDRPP_COMPILER_FLAGS -g -Og)
     endif ()
 else()
     # Normal Flags
@@ -113,8 +113,9 @@ if (ANDROID)
         "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate"
     )
     set(CMAKE_C_STANDARD 11)
-    set(CMAKE_CXX_STANDARD 14)
-    set(CMAKE_CXX14_EXTENSION_COMPILE_OPTION "-std=c++17")
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_FIND_ROOT_PATH "/sdr-kit/${ANDROID_ABI}/lib/cmake")
+    # set(CMAKE_CXX14_EXTENSION_COMPILE_OPTION "-std=c++17")
 endif (ANDROID)
 
 # Core of SDR++
